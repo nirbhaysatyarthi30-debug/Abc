@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Automatic Rotating Slider (Gradient Button)</title>
+    <style>
+        /* ==================== */
+        /* === CSS Styling === */
+        /* ==================== */
+
+        body {
+            display: flex;
+            flex-direction: column; 
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden; 
+            font-family: sans-serif;
+            
+            /* --- बैकग्राउंड इमेज --- */
+            background-image: url('birthday_background.jpg'); 
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: no-repeat; 
+            background-attachment: fixed; 
+            position: relative; 
+        }
+
+        /* बैकग्राउंड ओवरले */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg,#0e051c 0%,#000000 100%);
+            color: #fff;
+            z-index: -1; 
+        }
+
+        .container {
+            perspective: 1000px;
+            position: relative;
+            width: 200px; 
+            height: 300px; 
+            transform-style: preserve-3d;
+            margin-bottom: 40px; 
+        }
+
+        .carousel {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            animation: rotate-slides 25s infinite linear; 
+        }
+
+        .carousel figure {
+            position: absolute;
+            display: block;
+            width: 90%;
+            height: 90%;
+            margin: 0;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            border: 5px solid white;
+            left: 5%;
+            top: 5%;
+            background: #fff;
+        }
+
+        .carousel figure img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* --- 6 इमेजेज को 3D स्पेस में पोजीशन करना --- */
+        .carousel figure:nth-child(1) { transform: rotateY(0deg) translateZ(250px); } 
+        .carousel figure:nth-child(2) { transform: rotateY(60deg) translateZ(250px); } 
+        .carousel figure:nth-child(3) { transform: rotateY(120deg) translateZ(250px); } 
+        .carousel figure:nth-child(4) { transform: rotateY(180deg) translateZ(250px); } 
+        .carousel figure:nth-child(5) { transform: rotateY(240deg) translateZ(250px); } 
+        .carousel figure:nth-child(6) { transform: rotateY(300deg) translateZ(250px); } 
+
+        /* --- Keyframes for Continuous Rotation --- */
+        @keyframes rotate-slides {
+            from {
+                transform: rotateY(0deg);
+            }
+            to {
+                transform: rotateY(360deg);
+            }
+        }
+
+        /* --- बटन के लिए स्टाइल (सिंगल ग्रेडिएंट) --- */
+        .one-last-thing-btn {
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            border: none;
+            border-radius: 30px; 
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 150px;
+
+            /* --- ग्रेडिएंट (Pink और Purple का मिश्रण) --- */
+            background-color: #ff69b4; /* Fallback colour */
+            background-image: linear-gradient(to right, #ff69b4 0%, #8a2be2 100%); 
+        }
+
+        .one-last-thing-btn:hover {
+            transform: translateY(-5px); 
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); /* हॉवर पर गहरा शैडो */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="carousel" id="carousel">
+            <figure><img src="https://picsum.photos/id/10/200/300" alt="Image 1"></figure>
+            <figure><img src="https://picsum.photos/id/20/200/300" alt="Image 2"></figure>
+            <figure><img src="https://picsum.photos/id/30/200/300" alt="Image 3"></figure>
+            <figure><img src="https://picsum.photos/id/40/200/300" alt="Image 4"></figure>
+            <figure><img src="https://picsum.photos/id/50/200/300" alt="Image 5"></figure>
+            <figure><img src="https://picsum.photos/id/60/200/300" alt="Image 6"></figure>
+        </div>
+    </div>
+
+    <button class="one-last-thing-btn" onclick="window.location.href='Page7.html'">One Last Thing</button>
+
+</body>
+</html>

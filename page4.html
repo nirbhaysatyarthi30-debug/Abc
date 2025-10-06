@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Birthday Surprise is Here!</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.js"></script>
+
+    <style>
+        :root {
+            --bg-dark: #000000;
+            --bg-light: #1f043c;
+            --gradient-pink: #ff6bcb;
+            --gradient-purple: #5c0f91;
+            --text-glow: rgba(255, 107, 203, 0.5);
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(180deg, var(--bg-light) 0%, var(--bg-dark) 100%); 
+            overflow: hidden; 
+            color: white;
+            text-align: center;
+        }
+
+        .birthday-container {
+            z-index: 10;
+            padding: 20px;
+            max-width: 90%;
+            position: relative; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- Cake Styling (Same) --- */
+        .cake-container {
+            margin-bottom: 20px;
+            transform: scale(0.8); 
+        }
+        .cake-layer {
+            width: 150px;
+            height: 30px;
+            border-radius: 5px 5px 0 0;
+            margin: 0 auto -5px;
+            position: relative;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        }
+        .cake-layer.top {
+            width: 80px;
+            height: 35px;
+            background-color: #f0a; 
+        }
+        .cake-layer.middle {
+            width: 120px;
+            background-color: #c454ff; 
+        }
+        .cake-layer.bottom {
+            width: 150px;
+            height: 35px;
+            background-color: #ffc700; 
+            border-radius: 5px;
+        }
+
+        /* Candles */
+        .candles {
+            display: flex;
+            justify-content: center;
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+        }
+        .candle {
+            width: 5px;
+            height: 15px;
+            background-color: white;
+            border-radius: 2px;
+            margin: 0 5px;
+            position: relative;
+        }
+        .flame {
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 5px;
+            height: 5px;
+            background-color: orange;
+            border-radius: 50%;
+            box-shadow: 0 0 5px orange, 0 0 10px yellow;
+            animation: flicker 1s infinite alternate;
+        }
+
+        /* --- Text Styling (Same) --- */
+        .happy-birthday-text {
+            font-family: 'Dancing Script', cursive; 
+            font-size: 4rem; 
+            margin: 10px 0 5px;
+            background: linear-gradient(90deg, #ff6bcb, #e837b0, #c454ff); 
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px var(--text-glow); 
+        }
+
+        .recipient-name {
+            font-size: 2rem;
+            margin: 5px 0 15px;
+            color: white; 
+            letter-spacing: 2px;
+        }
+        
+        .heart {
+            color: red;
+            animation: pulse 1.5s infinite;
+        }
+
+        .special-day-text {
+            font-size: 1.2rem;
+            color: #ffd6ff;
+            margin-bottom: 30px;
+        }
+
+        /* --- Main Red Balloon (Center) (Same) --- */
+        .main-balloon {
+            width: 50px;
+            height: 70px;
+            background-color: red;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            margin: 10px auto;
+            position: relative;
+            box-shadow: inset -5px -5px 8px rgba(0,0,0,0.3);
+            animation: float 4s ease-in-out infinite;
+        }
+        .main-balloon::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 5px;
+            height: 5px;
+            background-color: red;
+            border-radius: 50%;
+        }
+
+        /* --- Magic Button Styling (Same) --- */
+        .magic-button {
+            padding: 15px 35px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            background: linear-gradient(90deg, var(--gradient-pink), var(--gradient-purple)); 
+            color: white;
+            box-shadow: 0 5px 20px var(--text-glow);
+            transition: transform 0.2s, box-shadow 0.2s;
+            z-index: 100;
+            position: relative;
+        }
+
+        .magic-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 203, 0.7);
+        }
+
+        /* --- Fixed Bottom Balloon Row (Same) --- */
+        .balloon-row {
+            position: absolute;
+            bottom: -50px; 
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center; 
+            z-index: 5; 
+            padding: 0; 
+        }
+
+        .balloon-item {
+            width: 70px;
+            height: 90px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            box-shadow: inset -8px -8px 10px rgba(0,0,0,0.3);
+            margin-left: -10px; 
+        }
+        .balloon-item:first-child {
+            margin-left: 0; 
+        }
+
+        /* Assigning Colors (Same) */
+        .balloon-item:nth-child(1) { background-color: #2ecc71; } 
+        .balloon-item:nth-child(2) { background-color: #e74c3c; } 
+        .balloon-item:nth-child(3) { background-color: #f1c40f; } 
+        .balloon-item:nth-child(4) { background-color: #3498db; } 
+        .balloon-item:nth-child(5) { background-color: #9b59b6; } 
+        .balloon-item:nth-child(6) { background-color: #e67e22; } 
+
+        /* --- Floating Balloons (Same) --- */
+        .floating-balloons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1; 
+            pointer-events: none;
+        }
+        .float-item {
+            position: absolute;
+            width: 30px;
+            height: 40px;
+            background-color: white; 
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            opacity: 0.6;
+            animation: rise 15s linear infinite;
+        }
+        .float-item:nth-child(1) { background-color: var(--gradient-pink); left: 10%; animation-delay: 0s; }
+        .float-item:nth-child(2) { background-color: #f1c40f; left: 80%; animation-delay: 5s; }
+        .float-item:nth-child(3) { background-color: #3498db; left: 30%; animation-delay: 10s; }
+        .float-item:nth-child(4) { background-color: #9b59b6; left: 60%; animation-delay: 15s; }
+        
+
+        /* --- Background Hearts (UPDATED COLOR) --- */
+        .background-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0; 
+            pointer-events: none; 
+        }
+
+        .bg-heart {
+            position: absolute;
+            font-size: 25px; 
+            /* Changed color to white for a lighter look on a dark background */
+            color: #ffffff; 
+            opacity: 0; 
+            animation: floatHeart 15s linear infinite;
+            /* Soft pink glow to match the theme */
+            text-shadow: 0 0 5px rgba(255, 107, 203, 0.7); 
+        }
+
+        .bg-heart:nth-child(1) { left: 15%; animation-delay: 0s; }
+        .bg-heart:nth-child(2) { left: 70%; animation-delay: 3s; font-size: 20px;}
+        .bg-heart:nth-child(3) { left: 40%; animation-delay: 6s; }
+        .bg-heart:nth-child(4) { left: 85%; animation-delay: 9s; font-size: 30px;}
+        .bg-heart:nth-child(5) { left: 5%; animation-delay: 12s; }
+        .bg-heart:nth-child(6) { left: 55%; animation-delay: 15s; font-size: 22px;}
+        
+        /* --- Keyframes Animations (Same) --- */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes flicker {
+            0%, 100% { box-shadow: 0 0 5px orange, 0 0 10px yellow; }
+            50% { box-shadow: 0 0 3px orange, 0 0 8px yellow; }
+        }
+        
+        @keyframes rise {
+            0% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% {
+                transform: translateY(-50vh);
+                opacity: 0;
+            }
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) scale(0.8);
+                opacity: 0;
+            }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% {
+                transform: translateY(-50vh) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+    </style>
+
+    <script>
+        let confettiInterval; 
+
+        // Function to launch confetti effect
+        function launchConfetti(x, y, count, spread) {
+            confetti({
+                particleCount: count,
+                // Spread wide across the entire top
+                spread: spread, 
+                // Origin at the top of the screen
+                origin: { x: x, y: y }, 
+                shapes: ['heart'], 
+                gravity: 0.8, 
+                scalar: 1.2, 
+                // Brighter, more vibrant colors
+                colors: ['#ffc700', '#ff0000', '#ff6bcb', '#ffffff', '#e837b0', '#c454ff']
+            });
+        }
+        
+        // --- Continuous Falling Confetti Effect ---
+        function startContinuousConfetti() {
+            // Trigger 1: Left side (particles fall down)
+            launchConfetti(0.2, 0, 200, 150); 
+            // Trigger 2: Right side (particles fall down)
+            launchConfetti(0.8, 0, 200, 150); 
+        }
+
+        // 1. **INSTANT START**: Start the continuous confetti immediately when the script is parsed.
+        // We ensure that the canvas-confetti library is available before this.
+        document.addEventListener('DOMContentLoaded', () => {
+             // Start the continuous loop every 500 milliseconds (0.5 seconds) for max density
+            confettiInterval = setInterval(startContinuousConfetti, 500); 
+        });
+        
+    </script>
+</head>
+<body>
+    
+    <div class="floating-balloons">
+        <div class="float-item"></div>
+        <div class="float-item"></div>
+        <div class="float-item"></div>
+        <div class="float-item"></div>
+    </div>
+
+    <div class="background-hearts">
+        <span class="bg-heart">❤</span>
+        <span class="bg-heart">❤</span>
+        <span class="bg-heart">❤</span>
+        <span class="bg-heart">❤</span>
+        <span class="bg-heart">❤</span>
+        <span class="bg-heart">❤</span>
+    </div>
+
+    <div class="birthday-container">
+        
+        <div class="cake-container">
+            <div class="cake-layer top">
+                <div class="candles">
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                </div>
+            </div>
+            <div class="cake-layer middle"></div>
+            <div class="cake-layer bottom"></div>
+        </div>
+
+        <h1 class="happy-birthday-text">Happy Birthday!</h1>
+        <h2 class="recipient-name">Madam Jii <span class="heart">♥</span></h2>
+        
+        <p class="special-day-text">
+            ✨ It's your special day!
+        </p>
+
+        <div class="main-balloon"></div>
+
+        <button id="magicBtn" class="magic-button" onclick="window.location.href='Page5.html'"> Continue the Magic <span class="arrow">→</span>
+        </button>
+
+    </div>
+
+    <div class="balloon-row">
+        <div class="balloon-item"></div>
+        <div class="balloon-item"></div>
+        <div class="balloon-item"></div>
+        <div class="balloon-item"></div>
+        <div class="balloon-item"></div>
+        <div class="balloon-item"></div>
+    </div>
+
+    <script>
+        const magicButton = document.getElementById('magicBtn');
+        
+        // This function is for the button click burst (re-uses the launchConfetti defined in HEAD)
+        magicButton.addEventListener('click', () => {
+            // Firing a big, celebratory burst from the center when the button is clicked
+            launchConfetti(0.5, 0.8, 400, 150); 
+            // You can optionally stop the continuous confetti here: clearInterval(confettiInterval);
+        });
+    </script>
+</body>
+</html>

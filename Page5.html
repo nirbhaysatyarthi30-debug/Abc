@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Special Messages</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&family=Dancing+Script:wght@700&display=swap');
+  * {margin:0; padding:0; box-sizing:border-box;}
+
+  body {
+    height: 100vh;
+    background: radial-gradient(circle at top, #1a001a, #000);
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    overflow: hidden;
+    text-align: center;
+    position: relative;
+  }
+
+  /* Floating glowing hearts */
+  .heart-bg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  .heart-float {
+    position: absolute;
+    color: #ff66cc;
+    opacity: 0.5;
+    filter: blur(1px);
+    text-shadow: 0 0 8px #ff80df, 0 0 15px #ffb3ff;
+    animation: floatHearts 10s linear infinite;
+  }
+
+  @keyframes floatHearts {
+    0% { transform: translateY(100vh) scale(0.7); opacity: 0; }
+    25% { opacity: 1; }
+    100% { transform: translateY(-10vh) scale(1.1); opacity: 0; }
+  }
+
+  .heart {
+    font-size: 50px;
+    color: #ff77ff;
+    margin-top: 25px;
+    position: relative;
+    z-index: 3;
+  }
+
+  h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: 38px;
+    background: linear-gradient(90deg, #ff77ff, #a177ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    z-index: 3;
+  }
+
+  h2 {
+    font-weight: 400;
+    font-size: 18px;
+    color: #ffccee;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 3;
+  }
+
+  /* Envelope */
+  .envelope-container {
+    position: relative;
+    width: 300px;
+    height: 200px;
+    margin: 200px auto 0; /* envelope aur niche */
+    perspective: 1000px;
+    cursor: pointer;
+    z-index: 5;
+  }
+
+  .envelope {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #ffe1ec;
+    border-radius: 14px;
+    box-shadow: 0 8px 25px rgba(255, 105, 180, 0.3);
+    overflow: hidden;
+  }
+
+  .flap {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 50%;
+    background: linear-gradient(to bottom, #ffc1cc, #ffe1ec);
+    clip-path: polygon(0 0, 50% 100%, 100% 0);
+    z-index: 2;
+    transition: transform 0.6s ease;
+    transform-origin: top;
+  }
+
+  .seal {
+    position: absolute;
+    top: 45%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 22px;
+    color: #ff3366;
+    z-index: 3;
+  }
+
+  .envelope-text {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #b01345;
+    font-weight: 600;
+    font-size: 15px;
+    z-index: 4;
+  }
+
+  /* Cards */
+  .card {
+    position: absolute;
+    left: 50%;
+    width: 260px;
+    height: 140px;
+    border-radius: 15px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 22px;
+    font-family: 'Dancing Script',cursive;
+    opacity: 0;
+    transform: translateX(-50%) translateY(0);
+    transition: all 0.9s ease;
+    z-index: 1;
+    padding: 15px;
+    line-height: 1.6em;
+    box-shadow: 0 8px 25px rgba(255, 105, 180, 0.3);
+  }
+
+  .card.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-360px); /* envelope ke thoda upar */
+    z-index: 10;
+  }
+
+  /* Button */
+  .moments-btn {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%) translateY(30px);
+    background: linear-gradient(90deg, #ff2d9a, #7b5cff);
+    border: none;
+    color: #fff;
+    padding: 12px 28px;
+    font-size: 16px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+    opacity: 0;
+    transition: all 0.5s ease;
+    z-index: 6;
+  }
+
+  .moments-btn.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .envelope-container:hover .flap {
+    transform: rotateX(15deg);
+  }
+</style>
+</head>
+<body>
+  <div class="heart-bg" id="hearts"></div>
+
+  <div class="heart">💌</div>
+  <h1>Special Messages</h1>
+  <h2>For Madam Jii 💖</h2>
+
+  <div class="envelope-container" id="envelopeBox">
+    <div class="envelope" id="envelope">
+      <div class="flap"></div>
+      <div class="seal">❤️</div>
+      <div class="envelope-text" id="envelope-text">Tap to open your first message</div>
+    </div>
+  </div>
+
+  <div class="card" id="card1" style="background:#ff4d6d;">You're the smile I never knew I needed 💕</div>
+  <div class="card" id="card2" style="background:#ff9f1c;">Your presence makes every day brighter ☀️</div>
+  <div class="card" id="card3" style="background:#6a4c93;">You’re a beautiful story I’ll never get tired of reading 💫</div>
+  <div class="card" id="card4" style="background:#1982c4;">I’m lucky to have someone like you 💖</div>
+
+  <button class="moments-btn" id="momentsBtn" onclick="window.location.href='Page6.html'">See your beautiful photos →</button>
+
+  <script>
+    // Glowing hearts background
+    const heartsContainer = document.getElementById("hearts");
+    for (let i = 0; i < 40; i++) {
+      const heart = document.createElement("div");
+      heart.classList.add("heart-float");
+      heart.textContent = "❤";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDelay = Math.random() * 10 + "s";
+      heart.style.fontSize = 10 + Math.random() * 25 + "px";
+      heartsContainer.appendChild(heart);
+    }
+
+    const envelopeBox = document.getElementById("envelopeBox");
+    const envelopeText = document.getElementById("envelope-text");
+    const flap = document.querySelector(".flap");
+    const cards = [
+      document.getElementById("card1"),
+      document.getElementById("card2"),
+      document.getElementById("card3"),
+      document.getElementById("card4")
+    ];
+    const momentsBtn = document.getElementById("momentsBtn");
+    let current = 0;
+
+    envelopeBox.addEventListener("click", () => {
+      if (current < cards.length) {
+        flap.style.transform = "rotateX(60deg)";
+        setTimeout(() => {
+          cards[current].classList.add("show");
+          current++;
+          if (current < cards.length) {
+            envelopeText.textContent = `${cards.length - current} cards remaining, tap to open`;
+          } else {
+            envelopeText.textContent = "All cards are opened! Tap to reset";
+            setTimeout(() => {
+              momentsBtn.classList.add("show");
+            }, 700);
+          }
+        }, 300);
+      } else {
+        flap.style.transform = "rotateX(0deg)";
+        cards.forEach(card => card.classList.remove("show"));
+        current = 0;
+        envelopeText.textContent = "Tap to open your first message";
+        momentsBtn.classList.remove("show");
+      }
+    });
+  </script>
+</body>
+</html>
