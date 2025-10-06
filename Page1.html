@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Birthday Surprise is Here!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Poppins:wght@300;400&display=swap" rel-stylesheet">
+    <style>
+        /* ================================================= */
+        /* CSS STYLES */
+        /* ================================================= */
+
+        /* Global Styling and Background Setup */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0e051c 0%, #000000 100%); 
+            color: #fff;
+            font-family: 'Poppins', sans-serif; 
+            overflow: hidden; /* Very important for floating effect */
+        }
+
+        /* Main Content Container */
+        .container {
+            text-align: center;
+            z-index: 10;
+            max-width: 90%; 
+            padding-top: 20px; 
+        }
+
+        /* Heart Icon Styling (Large, central heart) */
+        .big-heart {
+            position: relative;
+            width: 150px; 
+            height: 135px;
+            margin: 0 auto 15px; 
+            animation: pulse 1.5s infinite alternate; 
+            filter: drop-shadow(0 0 15px rgba(255, 0, 119, 0.7)); 
+        }
+        .big-heart:before,
+        .big-heart:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 75px;
+            height: 120px;
+            background: #ff0077; 
+            border-radius: 75px 75px 0 0;
+        }
+        .big-heart:before {
+            left: 75px;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+        .big-heart:after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        /* H1 Wrapper - Text and Underline */
+        .text-wrapper {
+            display: inline-block;
+            position: relative;
+            text-align: center;
+            margin-bottom: 5px; 
+        }
+
+        /* H1 Text Styling (Cursive, Thinner, Pink Color) */
+        h1 {
+            font-family: 'Dancing Script', cursive; 
+            font-size: 2em; 
+            font-weight: 500; /* Thinner weight */
+            white-space: nowrap; 
+            
+            /* Pure Pink color */
+            color: #ff8cfa; 
+            -webkit-text-fill-color: #ff8cfa; 
+            background-image: none; 
+            -webkit-background-clip: unset; 
+            background-clip: unset; 
+            
+            margin: 0;
+            padding-bottom: 8px; 
+            text-shadow: 0 0 5px rgba(255, 140, 250, 0.2); 
+        }
+        
+        /* Underline/Thin Bar below H1 */
+        .text-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: 3px; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70%; 
+            height: 1px; 
+            background-color: #fff; 
+            opacity: 0.8; 
+        }
+
+        /* P Text Styling (Smaller size, subtle color, lighter weight) */
+        p {
+            font-family: 'Poppins', sans-serif; 
+            font-size: 1em; 
+            color: #af92ff; 
+            margin-top: 5px;
+            font-weight: 300; 
+        }
+
+        /* Footer Text */
+        .footer {
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.9em;
+            font-family: Arial, sans-serif;
+            z-index: 10;
+        }
+
+        /* Keyframes for Heart Pulse Animation */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
+
+        /* Floating Heart Particle Base */
+        .heart-particle-base {
+            position: absolute;
+            width: 10px; 
+            height: 9px;
+            opacity: 0; /* Starts hidden */
+            z-index: 0;
+            filter: drop-shadow(0 0 3px rgba(255, 0, 119, 0.5));
+            /* Animation applied here */
+            animation: float-up-loop linear infinite; 
+        }
+        /* Heart shape definition for particles (no change) */
+        .heart-particle-base:before,
+        .heart-particle-base:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 5px;
+            height: 8px;
+            background: #ff8cf5; 
+            border-radius: 50px 50px 0 0;
+        }
+        .heart-particle-base:before { left: 5px; transform: rotate(-45deg); transform-origin: 0 100%; }
+        .heart-particle-base:after { left: 0; transform: rotate(45deg); transform-origin: 100% 100%; }
+
+        /* Individual Particle STARTING Positions */
+        /* Note: Animation will move them up from these points */
+        .p1 { top: 90%; left: 15%; animation-duration: 12s; animation-delay: 0s; }
+        .p2 { top: 95%; left: 5%; animation-duration: 9s; animation-delay: 2s; }
+        .p3 { top: 85%; left: 25%; animation-duration: 15s; animation-delay: 4s; }
+        .p4 { top: 88%; right: 10%; animation-duration: 11s; animation-delay: 1s; }
+        .p5 { top: 92%; right: 5%; animation-duration: 13s; animation-delay: 3s; }
+        .p6 { top: 90%; left: 40%; animation-duration: 10s; animation-delay: 5s; }
+
+        /* FLOATING UP LOOP Keyframes (Continuous animation) */
+        @keyframes float-up-loop {
+            0% { 
+                transform: translate(0, 0); 
+                opacity: 0; /* Start hidden at bottom */
+            }
+            10% {
+                opacity: 0.5; /* Fade in quickly */
+            }
+            90% { 
+                transform: translate(0, -100vh); /* Move 100% up the screen */
+                opacity: 0.5;
+            }
+            100% { 
+                transform: translate(0, -100vh); 
+                opacity: 0; /* Fade out at top, ready to restart */
+            }
+        }
+    </style>
+</head>
+<body>
+
+  </script>
+
+    <div class="heart-particle-base p1"></div>
+    <div class="heart-particle-base p2"></div>
+    <div class="heart-particle-base p3"></div>
+    <div class="heart-particle-base p4"></div>
+    <div class="heart-particle-base p5"></div>
+    <div class="heart-particle-base p6"></div>
+
+    <div class="container">
+        <div class="big-heart"></div>
+
+        <div class="text-wrapper">
+            <h1>Preparing Something Special</h1>
+        </div>
+        <p>For someone very special...</p>
+    </div>
+
+    
+
+    <script>
+    // 3 second baad dusre page pe redirect karega
+    setTimeout(function(){
+      window.location.href = "Page2.html"; // yaha second page ka naam/URL do
+    }, 3000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Birthday Surprise is Here!</title>
+  <style>
+    /* ===== BASIC BODY SETUP ===== */
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      font-family: sans-serif;
+      background: radial-gradient(ellipse at top, #120018 0%, #000 100%);
+      position: relative;
+      color: #fff;
+    }
+              /* Bounce Animation */
+  @keyframes bounce {
+    0%   { transform: translateY(-100px); opacity:0; }
+    50%  { transform: translateY(20px); opacity:1; }
+    70%  { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+  }
+
+  .bounce {
+    animation: bounce 1s ease;
+  }
+
+    /* ===== FLOATING HEART BACKGROUND ===== */
+    .hearts-container {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .heart {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: rgba(255, 182, 193, 0.5);
+      transform: rotate(45deg);
+      border-radius: 2px;
+      opacity: 0.5;
+      animation: floatAround 20s ease-in-out infinite;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: rgba(255, 182, 193, 0.5);
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -6px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: 6px;
+      top: 0;
+    }
+
+    @keyframes floatAround {
+      0% { transform: translate(0, 0) rotate(45deg); }
+      25% { transform: translate(-10px, 10px) rotate(45deg); }
+      50% { transform: translate(10px, -10px) rotate(45deg); }
+      75% { transform: translate(-8px, -6px) rotate(45deg); }
+      100% { transform: translate(0, 0) rotate(45deg); }
+    }
+
+    /* ===== 3D ROTATING SLIDER ===== */
+    .container {
+      perspective: 1000px;
+      position: relative;
+      width: 220px;
+      height: 320px;
+      transform-style: preserve-3d;
+      margin-bottom: 40px;
+      z-index: 1;
+    }
+
+    .carousel {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      animation: rotate-slides 25s infinite linear;
+    }
+
+    .carousel figure {
+      position: absolute;
+      display: block;
+      width: 90%;
+      height: 90%;
+      margin: 0;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+      border: 5px solid white;
+      left: 5%;
+      top: 5%;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .carousel figure img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* --- 6 Images Positioned in 3D --- */
+    .carousel figure:nth-child(1) { transform: rotateY(0deg) translateZ(250px); }
+    .carousel figure:nth-child(2) { transform: rotateY(60deg) translateZ(250px); }
+    .carousel figure:nth-child(3) { transform: rotateY(120deg) translateZ(250px); }
+    .carousel figure:nth-child(4) { transform: rotateY(180deg) translateZ(250px); }
+    .carousel figure:nth-child(5) { transform: rotateY(240deg) translateZ(250px); }
+    .carousel figure:nth-child(6) { transform: rotateY(300deg) translateZ(250px); }
+
+    @keyframes rotate-slides {
+      from { transform: rotateY(0deg); }
+      to { transform: rotateY(360deg); }
+    }
+
+    /* ===== BUTTON STYLE ===== */
+    .one-last-thing-btn {
+      padding: 15px 40px;
+      font-size: 18px;
+      font-weight: bold;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-top: 80px;
+      z-index: 1;
+      background-image: linear-gradient(to right, #ff69b4 0%, #8a2be2 100%);
+    }
+
+    .one-last-thing-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+    }
+  </style>
+</head>
+<body class="bounce">
+  <!-- ❤️ Floating Hearts Background -->
+  <div class="hearts-container" id="hearts"></div>
+
+  <!-- 🌀 3D Rotating Image Carousel -->
+  <div class="container">
+    <div class="carousel" id="carousel">
+      <figure><img src="https://raw.githubusercontent.com/nirbhaysatyarthi30-debug/Abc/refs/heads/main/IMG_20251006_180652.jpg" alt="Image 1"></figure>
+      <figure><img src="https://raw.githubusercontent.com/nirbhaysatyarthi30-debug/Abc/refs/heads/main/IMG_20251006_180032_485.jpg" alt="Image 2"></figure>
+      <figure><img src="https://raw.githubusercontent.com/nirbhaysatyarthi30-debug/Abc/refs/heads/main/IMG_20251006_180000_468.jpg" alt="Image 3"></figure>
+      <figure><img src="https://raw.githubusercontent.com/nirbhaysatyarthi30-debug/Abc/refs/heads/main/IMG_20251006_175949_845.jpg" alt="Image 4"></figure>
+      <figure><img src="https://raw.githubusercontent.com/nirbhaysatyarthi30-debug/Abc/refs/heads/main/IMG-20241216-WA0072.jpg" alt="Image 5"></figure>
+      <figure><img src="https://raw.githubusercontent.com/nirbhaysatyarthi30-debug/Abc/refs/heads/main/IMG-20241216-WA0042.jpg" alt="Image 6"></figure>
+    </div>
+  </div>
+
+  <button class="one-last-thing-btn" onclick="window.location.href='Page7.html'">One Last Thing→</button>
+
+  <script>
+    // 💖 Generate light pink floating hearts
+    const heartsContainer = document.getElementById('hearts');
+    const heartCount = 18; // kam quantity
+
+    for (let i = 0; i < heartCount; i++) {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.top = Math.random() * 100 + 'vh';
+      heart.style.animationDuration = 15 + Math.random() * 10 + 's';
+      heart.style.opacity = 0.3 + Math.random() * 0.3;
+      heart.style.transform = `scale(${0.5 + Math.random() * 1}) rotate(45deg)`;
+      heartsContainer.appendChild(heart);
+    }
+  </script>
+</body>
+</html>
